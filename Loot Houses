@@ -1,0 +1,19 @@
+using namespace std;
+int getMaxMoney(int arr[], int n){
+
+	/*Write your code here.
+	 *Don’t write main(). 
+	 *Don’t take input, it is passed as function argument.
+	 *Don’t print output.
+	 *Taking input and printing output is handled automatically.
+         */ 
+    int *dp = new int[n];
+	dp[0] = arr[0];
+	dp[1] = max(arr[1],arr[0]);
+	for(int i=2;i<n;i++){
+		int ans1 = dp[i-2]+arr[i];
+		int ans2 = dp[i-1];
+		dp[i] = max(ans1,ans2);
+	}   
+    return dp[n-1];
+}
