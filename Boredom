@@ -1,0 +1,29 @@
+#include<map>
+using namespace std;
+
+int solve(int n,vector<int>A){
+  /* Don't write main().
+     Don't read input, it is passed as function argument.
+     Return output and don't print it.
+     Taking input and printing output is handled automatically.
+  */
+    int* dp = new int[1001];
+    // for(int i=0;i<1001;i++){
+    //     dp[i]=0;
+    // }
+    dp[0] = 0;
+    map<int,int> m;
+    for(int i=0;i<n;i++){
+        m[A[i]] += 1;
+    }
+    if (m[1]!=0)
+        dp[1] = 1*m[1];
+    else
+        dp[1] = 0;
+    int i=2;
+    while(i<=1000){
+        dp[i] = max(dp[i-2]+i*m[i],dp[i-1]);
+        i++;
+    }
+    return dp[1000];
+}
