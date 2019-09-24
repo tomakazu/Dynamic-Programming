@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define mod 1000000007
+int num_codes(string input,int *array,int size){
+	int output = 0;
+    if(input[0]=='0')
+    {
+     array[size] = output;   
+     return output;   
+    }
+
+    if(input.empty()){
+		return 1;
+	}
+		
+	if(input.length()==1){
+		return 1;
+	}
+	if(array[size]!=0){
+		return array[size];
+	}
+	
+	if(input[0]!='0')
+		output = num_codes(input.substr(1),array,size-1);
+   	
+	int num = ((input[0]-'0')*10+(input[1]-'0'))%mod;
+	if(num>=10&&num<=26 && input.size()>1){
+		output=(num_codes(input.substr(2),array,size-2)%mod + output%mod)%mod;
+	}
+    array[size] = output;
+	return output%mod;
+}
+int main(){
+	while(1){
+		string input;
+		cin>>input;
+		if(input=="0")
+			break;
+		int *array = new int[input.size()+1]();
+		array[0] = 1;
+		array[1] = 1;
+		cout<<num_codes(input,array,input.size())<<endl;
+	}
+}
