@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    
+	int *array = new int[10001]();
+	array[1] = 1;
+	
+	for(int i=2;i<=100;i++){
+		if(array[i]==1){
+			continue;
+		}
+		for(int j=i*i;j<=10000;j+=i){
+				array[j] = 1; 
+		}
+	}
+
+	int t;
+    cin>>t;
+    
+	while(t--){
+    string str;
+    cin>>str;
+    //cout<<str<<endl;
+    bool **dp = new bool*[str.length()];
+    for(int i=0;i<str.length();i++){
+        dp[i] = new bool[str.length()]();
+    }
+    for(int i=0;i<str.length();i++){
+        dp[i][i] = true;
+    }
+    int maxlength = 1;
+    for(int i=0;i<str.length()-1;i++){
+    	if(str[i]==str[i+1]){
+    		dp[i][i+1] = true;
+			maxlength = 2;
+		}
+	}
+    for(int diff = 2;diff<str.length();diff++){
+    	
+    	for(int j=0;j<str.length()-diff;j++){
+    		
+    		if(str[j]==str[diff+j] && dp[j+1][diff+j-1]){
+    			dp[j][j+diff] = true;
+				maxlength = diff;
+			}
+		}
+	}
+    //cout<<maxlength<<endl;
+    if(maxlength==1){
+    	cout<<"NOT PRIME"<<endl;
+	}
+	else{
+		if(!array[maxlength+1]){
+    	cout<<"PRIME"<<endl;
+		}	else{
+			cout<<"NOT PRIME"<<endl;
+		}		
+	}
+    
+	
+	for(int i=0;i<str.length();i++){
+		delete[] dp[i]; 
+	}
+	delete[] dp;
+}
+    return 0;
+}
